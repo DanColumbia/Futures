@@ -1,8 +1,9 @@
 library(data.table)
-targetGenerator <- function(priceSeries, purchaseWindow, holdingPeriod)
+library(TTR)
+targetGenerator <- function(priceSeries, purchaseWindow = 1, holdingPeriod = 5)
 {
-    ps <- data.table(priceSeries)
-    setnames(ps, "date", "dateTime")
-    ps[,dateTime:=as.POSIXct(dateTime, format="%m/%d/%Y %H:%M", tz="Asia/Shanghai")]
-    ps[,time:=]
+    ps <- priceSeries
+    ps[,curTime:=time(dateTime)]
+    ps$executePrice <- rollapply(ps$index, purchaseWindow, mean)
+    time
 }
