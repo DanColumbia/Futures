@@ -17,7 +17,7 @@ targetGenerator <- function(priceSeries, executionWindow = 1, fixedHoldingPeriod
 
     ps$executionPrice <- rollapply(ps$index, executionWindow, mean)
     if(fixedHoldingPeriod){# sell at # of holdingPeriod days later, in the morning only
-        ps$test<-ifelse(ps$timeInDay==1,ps$profit <- 100*(lead(ps$executionPrice, holdingPeriod*16) - ps$executionPrice)/ps$executionPrice,
+        ps$profit<-ifelse(ps$timeInDay==1,ps$profit <- 100*(lead(ps$executionPrice, holdingPeriod*16) - ps$executionPrice)/ps$executionPrice,
                     ifelse(ps$timeInDay==2,ps$profit <- 100*(lead(ps$executionPrice, holdingPeriod*16-1) - ps$executionPrice)/ps$executionPrice,
                     ifelse(ps$timeInDay==3,ps$profit <- 100*(lead(ps$executionPrice, holdingPeriod*16-2) - ps$executionPrice)/ps$executionPrice,
                     ifelse(ps$timeInDay==4,ps$profit <- 100*(lead(ps$executionPrice, holdingPeriod*16-3) - ps$executionPrice)/ps$executionPrice,
@@ -35,15 +35,16 @@ targetGenerator <- function(priceSeries, executionWindow = 1, fixedHoldingPeriod
                     ps$profit <- 100*(lead(ps$executionPrice, holdingPeriod*16-15) - ps$executionPrice)/ps$executionPrice)
         ))))))))))))))
     }else{
-        ps$profit <- 
+        ps$profit <- 1
     }
 }
 
 
+sapply(ps$test, function(i) which.min())
 
 
-
-
+a <- which(ps$test>=0)
+b <- which(ps$test<0)
 
 
 
